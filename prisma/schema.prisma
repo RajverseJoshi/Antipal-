@@ -1,0 +1,221 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id                   String                 @id @default(uuid())
+  email                String                 @unique
+  passwordHash         String
+  role                 Role                   @default(USER)
+  createdAt            DateTime               @default(now())
+  updatedAt            DateTime               @updatedAt
+  deletedAt            DateTime?
+  
+  profile              Profile?
+  stressAssessments    StressAssessment[]
+  moodEntries          MoodEntry[]
+  journalEntries       JournalEntry[]
+  conversationSessions ConversationSession[]
+  aiMemories           AIMemory[]
+  memoryVaults         MemoryVault[]
+  achievements         UserAchievement[]
+  recoveryTree         RecoveryTree?
+  hopeScoreHistories   HopeScoreHistory[]
+  notifications        Notification[]
+  emergencyContacts    EmergencyContact[]
+  dailyGoals           DailyGoal[]
+}
+
+model Profile {
+  id                String    @id @default(uuid())
+  userId            String    @unique
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName          String
+  age               Int?
+  gender            String?
+  occupation        String?
+  timezone          String    @default("UTC")
+  country           String?
+  preferredLanguage String    @default("en")
+  profilePicture    String?
+  joinedAt          DateTime  @default(now())
+  currentStreak     Int       @default(0)
+  longestStreak     Int       @default(0)
+  hopeScore         Int       @default(50)
+  wellnessScore     Int       @default(50)
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  deletedAt         DateTime?
+}
+
+model StressAssessment {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers   Json
+  score     Int
+  level     String
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model MoodEntry {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mood      String
+  intensity Int
+  notes     String?
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model JournalEntry {
+  id         String    @id @default(uuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content    String
+  moodTag    String?
+  aiAnalysis String?
+  aiSummary  String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  deletedAt  DateTime?
+}
+
+model ConversationSession {
+  id        String                 @id @default(uuid())
+  userId    String
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String?
+  createdAt DateTime               @default(now())
+  updatedAt DateTime               @updatedAt
+  deletedAt DateTime?
+  messages  ConversationMessage[]
+}
+
+model ConversationMessage {
+  id        String              @id @default(uuid())
+  sessionId String
+  session   ConversationSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sender    String
+  content   String
+  isCrisis  Boolean             @default(false)
+  createdAt DateTime            @default(now())
+}
+
+model AIMemory {
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  memoryKey   String
+  memoryValue String
+  category    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+}
+
+model MemoryVault {
+  id               String    @id @default(uuid())
+  userId           String
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mediaUrl         String?
+  mediaType        String?
+  title            String
+  description      String?
+  importancePrompt String
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  deletedAt        DateTime?
+}
+
+model Achievement {
+  id          String            @id @default(uuid())
+  name        String            @unique
+  description String
+  badgeIcon   String
+  createdAt   DateTime          @default(now())
+  users       UserAchievement[]
+}
+
+model UserAchievement {
+  id            String      @id @default(uuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id], onDelete: Cascade)
+  unlockedAt    DateTime    @default(now())
+
+  @@unique([userId, achievementId])
+}
+
+model RecoveryTree {
+  id            String    @id @default(uuid())
+  userId        String    @unique
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  stage         String    @default("SEED")
+  leavesCount   Int       @default(0)
+  level         Int       @default(1)
+  nextMilestone String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  deletedAt     DateTime?
+}
+
+model HopeScoreHistory {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  score     Int
+  notes     String?
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  isRead    Boolean   @default(false)
+  type      String    @default("INFO")
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+}
+
+model EmergencyContact {
+  id           String    @id @default(uuid())
+  userId       String
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name         String
+  relationship String
+  phoneNumber  String
+  email        String?
+  hasConsent   Boolean   @default(false)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  deletedAt    DateTime?
+}
+
+model DailyGoal {
+  id            String    @id @default(uuid())
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title         String
+  description   String?
+  isCompleted   Boolean   @default(false)
+  isAiGenerated Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  completedAt   DateTime?
+  deletedAt     DateTime?
+}

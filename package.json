@@ -1,0 +1,49 @@
+{
+  "name": "antipal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "prisma": "prisma"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^4.0.33",
+    "@ai-sdk/openai": "^4.0.29",
+    "@ai-sdk/react": "^4.0.54",
+    "@google/generative-ai": "^0.24.1",
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
+    "ai": "^7.0.51",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.474.0",
+    "next": "16.3.0",
+    "next-auth": "^4.24.15",
+    "next-themes": "^0.4.4",
+    "openai": "^7.4.0",
+    "pg": "^8.22.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@prisma/config": "^7.9.1",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/pg": "^8.20.3",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "dotenv": "^16.4.7",
+    "effect": "^3.12.0",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.0",
+    "prisma": "^7.9.1",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
