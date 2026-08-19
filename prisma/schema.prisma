@@ -1,14 +1,21 @@
 datasource db {
-  provider = "postgresql"
+  provider   = "postgresql"
+  extensions = [vector]
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
 }
 
 enum Role {
   USER
   ADMIN
+}
+
+enum SubscriptionTier {
+  FREE
+  PREMIUM
 }
 
 model User {
@@ -20,6 +27,12 @@ model User {
   updatedAt            DateTime               @updatedAt
   deletedAt            DateTime?
   
+  subscription_tier    String                 @default("free")
+  tier                 SubscriptionTier       @default(FREE)
+  daily_message_count  Int                    @default(0)
+  extra_credits        Int                    @default(0)
+  best_friend_contact  String?
+
   profile              Profile?
   stressAssessments    StressAssessment[]
   moodEntries          MoodEntry[]
@@ -33,6 +46,8 @@ model User {
   notifications        Notification[]
   emergencyContacts    EmergencyContact[]
   dailyGoals           DailyGoal[]
+  userMemories         UserMemory[]
+  emotionalMemories    EmotionalMemory[]
 }
 
 model Profile {
@@ -219,3 +234,25 @@ model DailyGoal {
   completedAt   DateTime?
   deletedAt     DateTime?
 }
+
+model UserMemory {
+  id        String                 @id @default(uuid())
+  userId    String
+  user      User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  content   String
+  embedding Unsupported("vector(768)")?
+
+  @@map("user_memories")
+}
+
+model EmotionalMemory {
+  id        String                     @id @default(uuid())
+  userId    String
+  user      User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  summary   String
+  embedding Unsupported("vector(768)")
+  createdAt DateTime                   @default(now())
+
+  @@map("emotional_memories")
+}
+

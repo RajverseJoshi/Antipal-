@@ -32,6 +32,12 @@ const navigation = [
 
 export function Sidebar() {
   const pathname = usePathname()
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    const frame = requestAnimationFrame(() => setMounted(true))
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   return (
     <aside className="hidden md:flex h-screen w-64 flex-col fixed left-0 top-0 border-r border-border/80 bg-card/70 backdrop-blur-md text-card-foreground p-5 justify-between transition-all duration-300">
@@ -49,7 +55,7 @@ export function Sidebar() {
         {/* Links */}
         <nav className="flex flex-col gap-1">
           {navigation.map((item) => {
-            const isActive = pathname === item.href
+            const isActive = mounted ? pathname === item.href : false
             return (
               <Link
                 key={item.name}

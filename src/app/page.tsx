@@ -10,7 +10,11 @@ import {
   ShieldCheck,
   Sparkles,
   ArrowRight,
-  Heart
+  Heart,
+  CheckCircle2,
+  Mic,
+  Video,
+  Brain
 } from "lucide-react"
 
 export default function LandingPage() {
@@ -62,7 +66,7 @@ export default function LandingPage() {
           </h1>
 
           <p className="text-lg sm:text-xl text-slate-400 max-w-xl leading-relaxed">
-            "The companion that remembers your happiest moments when you forget them."
+            &quot;The companion that remembers your happiest moments when you forget them.&quot;
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 mt-4 w-full justify-center">
@@ -89,7 +93,7 @@ export default function LandingPage() {
           <div className="text-center max-w-lg mx-auto flex flex-col gap-2">
             <h2 className="text-3xl font-bold tracking-tight text-white">Designed to nurture resilience</h2>
             <p className="text-slate-400 text-sm">
-              Antipal doesn't just track metrics; it proactively guides you back to hope and balance.
+              Antipal doesn&apos;t just track metrics; it proactively guides you back to hope and balance.
             </p>
           </div>
 
@@ -149,13 +153,98 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="py-24 px-6 bg-slate-900 border-t border-slate-800">
+        <div className="max-w-5xl mx-auto flex flex-col gap-12">
+          <div className="text-center max-w-lg mx-auto flex flex-col gap-2">
+            <h2 className="text-3xl font-bold tracking-tight text-white">Choose Your Companion Experience</h2>
+            <p className="text-slate-400 text-sm">
+              Start for free, or unlock the most advanced emotional memory and live interaction features available.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto w-full">
+            {/* Free Tier */}
+            <div className="flex flex-col p-8 bg-slate-900 border border-slate-800 rounded-3xl relative overflow-hidden group hover:border-indigo-500/30 transition-all shadow-xl">
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-white">Free Wellness Tier</h3>
+                <p className="text-sm text-slate-400 mt-1">Perfect for daily mood tracking and journaling.</p>
+              </div>
+              
+              <div className="mb-8">
+                <span className="text-5xl font-extrabold text-white">$0</span>
+                <span className="text-slate-400">/month</span>
+              </div>
+
+              <ul className="space-y-4 mb-8 flex-1">
+                <li className="flex items-center gap-3 text-sm text-slate-300">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Standard Text Chat
+                </li>
+                <li className="flex items-center gap-3 text-sm text-slate-300">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" /> Basic Voice Input
+                </li>
+                <li className="flex items-center gap-3 text-sm text-slate-300">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" /> AI Studio Integration
+                </li>
+              </ul>
+
+              <Link
+                href="/register"
+                className="w-full py-3.5 px-4 rounded-xl font-bold text-sm bg-slate-800 text-white hover:bg-slate-700 transition-colors text-center border border-slate-700 hover:border-slate-600 shadow-md block"
+              >
+                Get Started
+              </Link>
+            </div>
+
+            {/* Premium Tier */}
+            <div className="flex flex-col p-8 bg-gradient-to-b from-indigo-900/40 to-slate-900 border border-indigo-500/30 rounded-3xl relative overflow-hidden group shadow-2xl shadow-indigo-900/20 hover:border-indigo-500/50 transition-all">
+              <div className="absolute top-0 right-0 p-4">
+                <span className="px-3 py-1 text-[10px] uppercase tracking-wider font-bold bg-indigo-500 text-white rounded-full flex items-center gap-1 shadow-lg shadow-indigo-500/30">
+                  <Sparkles className="w-3 h-3" /> Recommended
+                </span>
+              </div>
+              <div className="absolute top-[-50px] right-[-50px] w-32 h-32 bg-indigo-500/20 rounded-full blur-[40px] pointer-events-none" />
+
+              <div className="mb-6 relative z-10">
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Premium Companion</h3>
+                <p className="text-sm text-slate-400 mt-1">For ultra-low latency, deep emotional connections.</p>
+              </div>
+              
+              <div className="mb-8 relative z-10">
+                <span className="text-5xl font-extrabold text-white">$19</span>
+                <span className="text-slate-400">/month</span>
+              </div>
+
+              <ul className="space-y-4 mb-8 flex-1 relative z-10">
+                <li className="flex items-center gap-3 text-sm text-white font-medium">
+                  <Video className="w-5 h-5 text-purple-400" /> Live Video Call Companion
+                </li>
+                <li className="flex items-center gap-3 text-sm text-white font-medium">
+                  <Mic className="w-5 h-5 text-indigo-400" /> Live Speech-to-Speech
+                </li>
+                <li className="flex items-center gap-3 text-sm text-white font-medium">
+                  <Brain className="w-5 h-5 text-rose-400" /> 100-Day Emotional Memory
+                </li>
+              </ul>
+
+              <Link
+                href="/register"
+                className="w-full py-3.5 px-4 rounded-xl font-bold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 transition-all text-center shadow-lg shadow-indigo-500/25 block relative z-10 hover:scale-[1.02] active:scale-[0.98]"
+              >
+                Upgrade Now
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section className="py-24 px-6 max-w-5xl mx-auto flex flex-col gap-12">
         <h2 className="text-3xl font-bold tracking-tight text-center text-white">Loved by users</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-[20px] flex flex-col justify-between">
             <p className="text-slate-300 text-xs italic">
-              "Antipal helped me manage placement prep stress. The AI Coach felt less like a bot and more like an empathetic mentor."
+              &quot;Antipal helped me manage placement prep stress. The AI Coach felt less like a bot and more like an empathetic mentor.&quot;
             </p>
             <div className="mt-4">
               <h4 className="font-bold text-white text-xs">Aarav Sharma</h4>
@@ -164,7 +253,7 @@ export default function LandingPage() {
           </div>
           <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-[20px] flex flex-col justify-between">
             <p className="text-slate-300 text-xs italic">
-              "I love the Recovery Tree. Conventional streaks give me anxiety when I fail, but this tree just encourages me to pick back up."
+              &quot;I love the Recovery Tree. Conventional streaks give me anxiety when I fail, but this tree just encourages me to pick back up.&quot;
             </p>
             <div className="mt-4">
               <h4 className="font-bold text-white text-xs">Priya Verma</h4>
@@ -173,7 +262,7 @@ export default function LandingPage() {
           </div>
           <div className="p-6 bg-slate-900/50 border border-slate-800 rounded-[20px] flex flex-col justify-between">
             <p className="text-slate-300 text-xs italic">
-              "The Memory Vault triggers right when I write about an anxious day. Seeing my graduation certificate instantly grounded me."
+              &quot;The Memory Vault triggers right when I write about an anxious day. Seeing my graduation certificate instantly grounded me.&quot;
             </p>
             <div className="mt-4">
               <h4 className="font-bold text-white text-xs">Rohan Gupta</h4>

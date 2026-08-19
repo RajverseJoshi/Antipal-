@@ -42,15 +42,62 @@ export const authOptions: NextAuthOptions = {
     error: "/login"
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async signIn({ user }) {
+      if (!user?.email) return true;
+
+      try {
+        const existingUser = await prisma.user.findUnique({
+          where: { email: user.email }
+        });
+
+        if (!existingUser) {
+          await prisma.user.create({
+            data: {
+              id: user.id, // Ensure Prisma ID matches NextAuth ID
+              email: user.email,
+              passwordHash: "auto-generated-no-password", // Required by schema
+              subscription_tier: "free",
+              tier: "FREE",
+              daily_message_count: 0
+            }
+          });
+        }
+      } catch (error) {
+        console.error("Error auto-creating user during signIn:", error);
+      }
+
+      return true;
+    },
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id
+        // Fetch fresh tier from DB on initial sign-in
+        try {
+          const dbUser = await prisma.user.findUnique({ where: { id: user.id } })
+          token.tier = dbUser?.tier || "FREE"
+        } catch (e) {
+          token.tier = "FREE"
+        }
+      } else if (!token.tier && token.id) {
+        // Fallback if token somehow misses tier
+        try {
+          const dbUser = await prisma.user.findUnique({ where: { id: token.id as string } })
+          token.tier = dbUser?.tier || "FREE"
+        } catch (e) {
+          token.tier = "FREE"
+        }
+      }
+      
+      // Update triggered from client session.update()
+      if (trigger === "update" && session?.tier) {
+        token.tier = session.tier
       }
       return token
     },
     async session({ session, token }) {
       if (session.user) {
         (session.user as any).id = token.id as string
+        (session.user as any).tier = token.tier as string
       }
       return session
     }

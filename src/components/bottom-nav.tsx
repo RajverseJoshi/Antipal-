@@ -22,12 +22,18 @@ const mobileNavigation = [
 
 export function BottomNav() {
   const pathname = usePathname()
+  const [mounted, setMounted] = React.useState(false)
+
+  React.useEffect(() => {
+    const frame = requestAnimationFrame(() => setMounted(true))
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   return (
     <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t border-border/80 bg-card/70 backdrop-blur-md text-card-foreground pb-safe-bottom">
       <div className="flex h-16 items-center justify-around px-2">
         {mobileNavigation.map((item) => {
-          const isActive = pathname === item.href
+          const isActive = mounted ? pathname === item.href : false
           return (
             <Link
               key={item.name}

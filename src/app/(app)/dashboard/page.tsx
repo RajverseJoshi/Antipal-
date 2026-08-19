@@ -20,6 +20,7 @@ import {
   Heart,
   CheckCircle2
 } from "lucide-react"
+import { SubscriptionModal } from "@/components/SubscriptionModal"
 
 export default function DashboardPage() {
   const [selectedMood, setSelectedMood] = useState<string | null>(null)
@@ -49,6 +50,7 @@ export default function DashboardPage() {
 
   return (
     <div className="flex flex-col gap-8 pb-12">
+      <SubscriptionModal />
       {/* Header section (Section 22) */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-border/40 pb-6">
         <div>
