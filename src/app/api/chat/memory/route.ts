@@ -53,7 +53,7 @@ export async function POST(req: Request) {
     if (!apiKey) throw new Error("Missing GEMINI_API_KEY")
 
     const genAI = new GoogleGenerativeAI(apiKey)
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" })
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" })
 
     // Generate a summary
     const prompt = `Analyze the following conversation transcript from an AI mental wellness companion session. 

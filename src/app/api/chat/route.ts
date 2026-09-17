@@ -108,7 +108,7 @@ export async function POST(req: Request) {
     };
 
     const model = genAI.getGenerativeModel({
-      model: "gemini-3.6-flash",
+      model: "gemini-1.5-flash",
       systemInstruction: "You are a highly empathetic, supportive, and professional mental wellness coach for the Antipal app. Keep responses concise, comforting, and grounded." + memoryContext,
       generationConfig: {
         responseMimeType: "application/json",

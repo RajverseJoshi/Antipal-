@@ -153,7 +153,7 @@ export function PremiumLiveChat() {
         // Send initial setup message configuring 16kHz PCM audio and injecting memories
         ws.send(JSON.stringify({
           setup: {
-            model: data.isFallback ? "models/gemini-3.1-flash-live-preview" : `projects/${data.projectId || "your-project"}/locations/us-central1/publishers/google/models/gemini-3.1-flash-live-preview`,
+            model: data.isFallback ? "models/gemini-2.0-flash-exp" : `projects/${data.projectId || "your-project"}/locations/us-central1/publishers/google/models/gemini-2.0-flash-exp`,
             systemInstruction: {
               parts: [{
                 text: `You are Antipal, an empathetic, highly supportive mental wellness AI companion. Keep your spoken responses concise and natural. ${memoryContext}`
